@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovimiento : MonoBehaviour
@@ -19,6 +20,7 @@ public class PlayerMovimiento : MonoBehaviour
 
     [Header("Movimineto")]
     public float Speed;
+    public bool finalizoNivel;
 
     [Header("Salto")]
     public float JumpForce;
@@ -55,7 +57,7 @@ public class PlayerMovimiento : MonoBehaviour
         animador.SetBool("Caminar", Horizontal != 0.0f);
         animador.SetBool("IsGrounded", isGrounded);
 
-        if (SigueVivo)
+        if (SigueVivo & !MenuDePausa.instance.estaPausado && !finalizoNivel)
         {
             if (KnockBackContador <= 0)
             {

@@ -11,6 +11,10 @@ public class CanvasControler : MonoBehaviour
 
     public Sprite CorazonLleno, CorazonVacio, CorazonMedio;
 
+    public  Image fadeScreen;
+    public float fadeSpeed;
+    private bool shouldFadeToBlack, shouldFadeFromWhite, pantallaFinal;
+    public GameObject NivelCompletadoText, fondoFinal;
 
     private void Awake()
     {
@@ -19,12 +23,36 @@ public class CanvasControler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        FadeFromBlack();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (shouldFadeToBlack)
+        {
+            fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, Mathf.MoveTowards(fadeScreen.color.a, 1f, fadeSpeed * Time.deltaTime));
+
+            if (fadeScreen.color.a==1f)
+            {
+                shouldFadeToBlack = false;
+            }
+        }
+
+        if (shouldFadeFromWhite)
+        {
+            fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, Mathf.MoveTowards(fadeScreen.color.a, 0f, fadeSpeed * Time.deltaTime));
+
+            if (fadeScreen.color.a == 0f)
+            {
+                shouldFadeFromWhite = false;
+            }
+        }
+        if (pantallaFinal)
+        {
+            fondoFinal.SetActive(true);
+        }
+       
 
     }
 
@@ -76,4 +104,25 @@ public class CanvasControler : MonoBehaviour
         }
     }
 
+    public void FadeToBlack()
+    {
+        shouldFadeToBlack = true;
+        shouldFadeFromWhite = false;
+        pantallaFinal = false;
+        
+    }
+
+    public void FadeFromBlack()
+    {
+        shouldFadeToBlack = false;
+        pantallaFinal= false;
+        shouldFadeFromWhite = true;  
+    }
+
+    public void FadePantallaFinal()
+    {
+        shouldFadeToBlack = false;
+        pantallaFinal = true;
+        shouldFadeFromWhite =false;
+    }
 }
