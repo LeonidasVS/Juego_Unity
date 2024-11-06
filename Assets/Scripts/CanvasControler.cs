@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,9 @@ public class CanvasControler : MonoBehaviour
     public Sprite CorazonLleno, CorazonVacio, CorazonMedio;
 
     public  Image fadeScreen;
-    public float fadeSpeed;
-    private bool shouldFadeToBlack, shouldFadeFromWhite, pantallaFinal;
-    public GameObject NivelCompletadoText, fondoFinal;
+    public float fadeSpeed,tiempo;
+    private bool shouldFadeToBlack, shouldFadeFromWhite, pantallaFinal,PantallaGameOver;
+    public GameObject NivelCompletadoText, fondoFinal,gameOver;
 
     private void Awake()
     {
@@ -48,11 +49,22 @@ public class CanvasControler : MonoBehaviour
                 shouldFadeFromWhite = false;
             }
         }
+        if (VidaPlayer.instance.VidaRestante<=0)
+        {
+            tiempo -= Time.deltaTime;
+
+            if (tiempo <= 0)
+            {
+                CanvasControler.instance.FadeFromBlack();
+                tiempo = 0;
+                GameOver();
+            }
+
+        }
         if (pantallaFinal)
         {
             fondoFinal.SetActive(true);
         }
-       
 
     }
 
@@ -124,5 +136,16 @@ public class CanvasControler : MonoBehaviour
         shouldFadeToBlack = false;
         pantallaFinal = true;
         shouldFadeFromWhite =false;
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOve());
+    }
+
+    public IEnumerator GameOve()
+    {
+        yield return new WaitForSeconds(1f);
+        CanvasControler.instance.gameOver.SetActive(true);
     }
 }

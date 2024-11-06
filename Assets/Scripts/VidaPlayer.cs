@@ -10,6 +10,7 @@ public class VidaPlayer : MonoBehaviour
     public float CantidadInvicibilidad;
     public float ContadorInvisibilidad;
 
+
     private SpriteRenderer spriteRender;
     private void Awake()
     {
@@ -36,8 +37,9 @@ public class VidaPlayer : MonoBehaviour
 
         if (VidaRestante <= 0)
         {
-            PlayerMovimiento.instancia.DesactivarInput();
+            Musica.instance.CambiarMusica();
             gameObject.SetActive(false);
+            CanvasControler.instance.FadeToBlack();      
         }
     }
 
@@ -62,5 +64,15 @@ public class VidaPlayer : MonoBehaviour
         }
     }
 
+    //public void GO()
+    //{
+    //    StartCoroutine(gameOver());
+    //}
+
+    //public IEnumerator gameOver()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    CanvasControler.instance.gameOver.SetActive(true);
+    //}
 
 }

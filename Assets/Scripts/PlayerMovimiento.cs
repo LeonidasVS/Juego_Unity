@@ -43,7 +43,6 @@ public class PlayerMovimiento : MonoBehaviour
     //#endregion
     public float KnockBackLongitud, KnockBackFuerza,tiempoPorAnimacion;
     private float KnockBackContador;
-    private bool SigueVivo = true;
     private float LastSHoot;
     void Start()
     {
@@ -57,7 +56,7 @@ public class PlayerMovimiento : MonoBehaviour
         animador.SetBool("Caminar", Horizontal != 0.0f);
         animador.SetBool("IsGrounded", isGrounded);
 
-        if (SigueVivo & !MenuDePausa.instance.estaPausado && !finalizoNivel)
+        if (!finalizoNivel & !MenuDePausa.instance.estaPausado)
         {
             if (KnockBackContador <= 0)
             {
@@ -88,14 +87,13 @@ public class PlayerMovimiento : MonoBehaviour
                 if (Rigidbody2D.velocity.x < 0)
                 {
                     sprite.flipX = true;
-
                 }
                 else if (Rigidbody2D.velocity.x > 0)
                 {
                     sprite.flipX = false;
                 }
 
-                if (Input.GetKey(KeyCode.E) && Time.time>LastSHoot+.7f)
+                if (Input.GetKey(KeyCode.E) && Time.time > LastSHoot + .7f)
                 {
                     StartCoroutine(AttackAndShoot());
                     LastSHoot = Time.time;
@@ -113,18 +111,13 @@ public class PlayerMovimiento : MonoBehaviour
                     Rigidbody2D.velocity = new Vector2(KnockBackFuerza, Rigidbody2D.velocity.y);
                 }
             }
-        }  
+        }
     }
 
     public void KnocckBack()
     {
         KnockBackContador = KnockBackLongitud;
         Rigidbody2D.velocity = new Vector2(0f, KnockBackFuerza);
-    }
-
-    public void DesactivarInput()
-    {
-        SigueVivo = false;
     }
 
     public void Shoot()

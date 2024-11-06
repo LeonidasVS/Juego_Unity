@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.UI;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 
 public class MenuDePausa : MonoBehaviour
 {
@@ -23,10 +18,11 @@ public class MenuDePausa : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("MenuDePausa"))
+        if (Input.GetButtonDown("MenuDePausa") && !SalirDelNivel.instance.tocoPointFinalizador)
         {
             JuegoEnPausa();
         }
+        
     }
 
     public void JuegoEnPausa()
@@ -36,7 +32,6 @@ public class MenuDePausa : MonoBehaviour
             estaPausado = false;
             pausaScreen.SetActive(false);
             Time.timeScale = 1f;
-            Debug.Log("Jugando");
             
         }
         else
@@ -44,7 +39,6 @@ public class MenuDePausa : MonoBehaviour
             estaPausado = true;
             pausaScreen.SetActive(true);
             Time.timeScale = 0f;
-            Debug.Log("pausado");
         }
     }
 

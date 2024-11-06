@@ -54,7 +54,8 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
 
         CanvasControler.instance.FadePantallaFinal();
-        yield return new WaitForSeconds((3f/CanvasControler.instance.fadeSpeed)+.25f);
+        yield return new WaitForSeconds((15f / CanvasControler.instance.fadeSpeed) + .25f);
         SceneManager.LoadScene(menuPrincipal);
     }
 }
+
